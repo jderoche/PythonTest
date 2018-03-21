@@ -32,7 +32,9 @@ class TestHighScoringWords:
         pass
 
     def testbuild_leaderboard_for_letters(self):
-
+        print("TEST : testbuild_leaderboard_for_letters")
+        self.highscore.build_leaderboard_for_letters('air');
+        self.UnitTest.IsEqual(self.highscore.leaderboard[0],'airfreighting')
         pass
 
     def testComputeWordValue(self):
@@ -50,5 +52,5 @@ class TestHighScoringWords:
 Test = TestHighScoringWords();
 Test.testbuild_leaderboard_for_word_list();
 Test.testComputeWordValue();
-
+Test.testbuild_leaderboard_for_letters();
 

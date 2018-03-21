@@ -62,7 +62,6 @@ class HighScoringWords:
         :param starting_letters: a random string of letters from which to build words that are valid against the contents of the wordlist.txt file
         :return:
         """
-        found = 0;
         charindex=0
         newlist=[]
         # to find all valid word according to the starting_letters
@@ -91,7 +90,7 @@ class HighScoringWords:
                         continue
                     else:
                         self.leaderboard.append(key)
-                        print("Word:%s : %d" %(key,val))
+                        #print("Word:%s : %d" %(key,val))
                     numberofleader = numberofleader +1
                 if (numberofleader>=self.MAX_LEADERBOARD_LENGTH):
                     break
