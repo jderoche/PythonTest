@@ -28,7 +28,25 @@ class HighScoringWords:
         Build a leaderboard of the top scoring MAX_LEADERBOAD_LENGTH words from the complete set of valid words.
         :return:
         """
+        wordvaluelist = {} # prepare datadict for leaderboard
+        maxscore = 0       # preparre value for maxscore
 
+        # build the datadict with all the word and score
+        for word in self.valid_words:
+            computescore = self.ComputeWordScore(word)
+            if (maxscore<computescore):     #get the hight score
+                maxscore = computescore
+            wordvaluelist[str(word)] = int(computescore)
+        numberofleader = 0
+        for score in range(maxscore,0):
+            for key, val in wordvaluelist.items():
+                if (val >= score):
+                    self.leaderboard.append(key)
+                    numberofleader = numberofleader +1
+                if (numberofleader>=MAX_LEADERBOARD_LENGTH):
+                    break
+            if (numberofleader>=MAX_LEADERBOARD_LENGTH):
+                break
 
     def build_leaderboard_for_letters(self, starting_letters):
         """
@@ -39,3 +57,10 @@ class HighScoringWords:
         :param starting_letters: a random string of letters from which to build words that are valid against the contents of the wordlist.txt file
         :return:
         """
+
+    def ComputeWordScore(self,word):
+        value = 0;
+        # to find the next valid word with the required char
+        for c in word:
+            value = value + self.letter_values[c]
+        return value

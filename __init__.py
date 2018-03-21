@@ -39,19 +39,18 @@ using alphabetically
 """
 import highscoringwords
 
+
 """function to loock for a valid word having the last valid word with the next
 char and next char position
 """
-def GetValidWord(char,currentword,charposition):
+def ComputeWordScore(word):
     global highScore
-    found = 0;
+    value = 0;
     # to find the next valid word with the required char
-    for word in highScore.valid_words:
-        if (len(word)>(charposition+1)): # check the size
-            if (char == word[charposition+1]): #found
-                print(word)
-                return
-    print("not found")
+    for c in word:
+        value = value + highScore.letter_values[c]
+    print("Value of %s is %d" %(word, value))
+    return value
 
 def FindWordListFromFirstChar(currentword):
     global highScore
@@ -85,13 +84,18 @@ def FindByWordFromList(currentword,charindex,newlist):
     print(newlist)
     return newlist;
 
+#for TEST function
 highScore = highscoringwords.HighScoringWords()
+highScore.build_leaderboard_for_word_list()
 
 wList = FindWordListFromFirstChar('bord')
 FindByWordFromList('bord',1,wList)
 FindByWordFromList('bord',2,wList)
 FindByWordFromList('boro',3,wList)
 print(wList);
+ComputeWordScore('borrowed')
+print(highScore.leaderboard)
+
 
 
 

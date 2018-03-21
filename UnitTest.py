@@ -26,7 +26,7 @@ class TestHighScoringWords:
         pass
 
     def testbuild_leaderboard_for_letters(self):
-        self.UnitTest.IsEqual("2","2")
+
         pass
 
 Test = TestHighScoringWords();
