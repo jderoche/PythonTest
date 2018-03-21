@@ -23,12 +23,32 @@ class TestHighScoringWords:
         pass
 
     def testbuild_leaderboard_for_word_list(self):
+        print("TEST : testbuild_leaderboard_for_word_list")
+        self.highscore.build_leaderboard_for_word_list();
+        self.UnitTest.IsEqual(self.highscore.leaderboard[0],'razzamatazzes')
+        self.highscore.letter_values['a']=-5
+        self.highscore.build_leaderboard_for_word_list();
+        self.UnitTest.IsEqual(self.highscore.leaderboard[0],'hypophysectomizing')
         pass
 
     def testbuild_leaderboard_for_letters(self):
 
         pass
 
+    def testComputeWordValue(self):
+        print("TEST : testComputeWordValue")
+        A = self.highscore.ComputeWordScore('a')
+        B =  self.highscore.ComputeWordScore('c')
+        C =  self.highscore.ComputeWordScore('t')
+        self.UnitTest.IsEqual(self.highscore.ComputeWordScore('act'),A+B+C)
+        self.highscore.letter_values['a']=-1
+        self.UnitTest.IsEqual(self.highscore.ComputeWordScore('act'),-1+B+C)
+        self.highscore.letter_values['a']=A
+        self.UnitTest.IsEqual(self.highscore.ComputeWordScore('act'),A+B+C)
+        pass
+
 Test = TestHighScoringWords();
-Test.testbuild_leaderboard_for_letters();
+Test.testbuild_leaderboard_for_word_list();
+Test.testComputeWordValue();
+
 

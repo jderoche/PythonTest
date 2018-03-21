@@ -38,14 +38,19 @@ class HighScoringWords:
                 maxscore = computescore
             wordvaluelist[str(word)] = int(computescore)
         numberofleader = 0
-        for score in range(maxscore,0):
+        self.leaderboard=[]
+        for score in range(maxscore,0,-1):
             for key, val in wordvaluelist.items():
                 if (val >= score):
-                    self.leaderboard.append(key)
+                    if key in self.leaderboard:
+                        continue
+                    else:
+                        self.leaderboard.append(key)
+                        #print("Word:%s : %d" %(key,val))
                     numberofleader = numberofleader +1
-                if (numberofleader>=MAX_LEADERBOARD_LENGTH):
+                if (numberofleader>=self.MAX_LEADERBOARD_LENGTH):
                     break
-            if (numberofleader>=MAX_LEADERBOARD_LENGTH):
+            if (numberofleader>=self.MAX_LEADERBOARD_LENGTH):
                 break
 
     def build_leaderboard_for_letters(self, starting_letters):
@@ -57,6 +62,58 @@ class HighScoringWords:
         :param starting_letters: a random string of letters from which to build words that are valid against the contents of the wordlist.txt file
         :return:
         """
+        found = 0;
+        charindex=0
+        newlist=[]
+        # to find all valid word according to the starting_letters
+        c = starting_letters[0]
+        for word in self.valid_words:
+            if (c == word[0]): #found
+                newlist.append(word)
+        for charindex in range(0,len(starting_letters)):
+            self.FindByWordFromList(starting_letters,charindex,newlist)
+
+        wordvaluelist = {} # prepare datadict for leaderboard
+        maxscore = 0       # preparre value for maxscore
+
+        # build the datadict with all the word and score
+        for word in newlist:
+            computescore = self.ComputeWordScore(word)
+            if (maxscore<computescore):     #get the hight score
+                maxscore = computescore
+            wordvaluelist[str(word)] = int(computescore)
+        numberofleader = 0
+        self.leaderboard=[]
+        for score in range(maxscore,0,-1):
+            for key, val in wordvaluelist.items():
+                if (val >= score):
+                    if key in self.leaderboard:
+                        continue
+                    else:
+                        self.leaderboard.append(key)
+                        print("Word:%s : %d" %(key,val))
+                    numberofleader = numberofleader +1
+                if (numberofleader>=self.MAX_LEADERBOARD_LENGTH):
+                    break
+            if (numberofleader>=self.MAX_LEADERBOARD_LENGTH):
+                break
+
+    def FindByWordFromList(self, currentword,charindex,newlist):
+        c = currentword[charindex]
+        count =  len(newlist)
+        extractlist = []
+        index = 0
+        # to find the next valid word with the required char
+        while (count>0):
+            word = newlist[index]
+            if (charindex<len(word)): #if word is long enough
+                if (c != word[charindex]): # not match remove it
+                    newlist.remove(word)
+                else:
+                    index = index +1
+            else:
+                newlist.remove(word)  #if too shot remove it
+            count=count-1
 
     def ComputeWordScore(self,word):
         value = 0;

@@ -52,49 +52,44 @@ def ComputeWordScore(word):
     print("Value of %s is %d" %(word, value))
     return value
 
-def FindWordListFromFirstChar(currentword):
-    global highScore
-    found = 0;
-    charindex=0
-    newlist=[]
-    # to find all valid word according to the currentword
-    c = currentword[0]
-    for word in highScore.valid_words:
-        if (c == word[0]): #found
-            newlist.append(word)
-    return newlist
-
-def FindByWordFromList(currentword,charindex,newlist):
-    global highScore
-    c = currentword[charindex]
-    count =  len(newlist)
-    extractlist = []
-    index = 0
-    # to find the next valid word with the required char
-    while (count>0):
-        word = newlist[index]
-        if (charindex<len(word)): #if word is long enough
-            if (c != word[charindex]): # not match remove it
-                newlist.remove(word)
-            else:
-                index = index +1
-        else:
-            newlist.remove(word)  #if too shot remove it
-        count=count-1
-    print(newlist)
-    return newlist;
+##def FindWordListFromFirstChar(currentword):
+##    global highScore
+##    found = 0;
+##    charindex=0
+##    newlist=[]
+##    # to find all valid word according to the currentword
+##    c = currentword[0]
+##    for word in highScore.valid_words:
+##        if (c == word[0]): #found
+##            newlist.append(word)
+##    for charindex in range(0,len(currentword)):
+##        FindByWordFromList(currentword,charindex,newlist)
+##    return newlist
+##
+##def FindByWordFromList(currentword,charindex,newlist):
+##    global highScore
+##    c = currentword[charindex]
+##    count =  len(newlist)
+##    extractlist = []
+##    index = 0
+##    # to find the next valid word with the required char
+##    while (count>0):
+##        word = newlist[index]
+##        if (charindex<len(word)): #if word is long enough
+##            if (c != word[charindex]): # not match remove it
+##                newlist.remove(word)
+##            else:
+##                index = index +1
+##        else:
+##            newlist.remove(word)  #if too shot remove it
+##        count=count-1
 
 #for TEST function
 highScore = highscoringwords.HighScoringWords()
 highScore.build_leaderboard_for_word_list()
 
-wList = FindWordListFromFirstChar('bord')
-FindByWordFromList('bord',1,wList)
-FindByWordFromList('bord',2,wList)
-FindByWordFromList('boro',3,wList)
-print(wList);
-ComputeWordScore('borrowed')
-print(highScore.leaderboard)
+highScore.build_leaderboard_for_letters("air")
+
 
 
 
