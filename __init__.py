@@ -44,18 +44,54 @@ char and next char position
 """
 def GetValidWord(char,currentword,charposition):
     global highScore
-    found = FALSE;
+    found = 0;
     # to find the next valid word with the required char
-    for x in len(highScore.valid_words):
-        if (len(highScore.valid_words[x])<=(charposition+1)): # check the size
-            if (char == highScore.valid_words[x][charposition+1]): #found
-                return x;
+    for word in highScore.valid_words:
+        if (len(word)>(charposition+1)): # check the size
+            if (char == word[charposition+1]): #found
+                print(word)
+                return
+    print("not found")
 
-def FindValidWord()
+def FindWordListFromFirstChar(currentword):
+    global highScore
+    found = 0;
+    charindex=0
+    newlist=[]
+    # to find all valid word according to the currentword
+    c = currentword[0]
+    for word in highScore.valid_words:
+        if (c == word[0]): #found
+            newlist.append(word)
+    return newlist
+
+def FindByWordFromList(currentword,charindex,newlist):
+    global highScore
+    c = currentword[charindex]
+    count =  len(newlist)
+    extractlist = []
+    index = 0
+    # to find the next valid word with the required char
+    while (count>0):
+        word = newlist[index]
+        if (charindex<len(word)): #if word is long enough
+            if (c != word[charindex]): # not match remove it
+                newlist.remove(word)
+            else:
+                index = index +1
+        else:
+            newlist.remove(word)  #if too shot remove it
+        count=count-1
+    print(newlist)
+    return newlist;
 
 highScore = highscoringwords.HighScoringWords()
 
-print(highScore.valid_words[200][0])
+wList = FindWordListFromFirstChar('bord')
+FindByWordFromList('bord',1,wList)
+FindByWordFromList('bord',2,wList)
+FindByWordFromList('boro',3,wList)
+print(wList);
 
 
 
